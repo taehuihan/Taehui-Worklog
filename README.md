@@ -12,6 +12,7 @@ Vestway 앱 디자인 작업에서 Claude + Figma MCP를 활용해 진행한 자
 |------|------|
 | [master-flow/](master-flow/) | Figma Task 페이지 화면 → Master 페이지 플로우 다이어그램 자동 정리 |
 | [sp500-logo/](sp500-logo/) | S&P 500 종목 로고 썸네일 컴포넌트 564개 제작 |
+| [ra-live-class/](ra-live-class/) | 🔍[RA] PAGE UI_Live Class Figma 파일 마스터 컴포넌트 중앙화 작업 |
 
 ---
 
