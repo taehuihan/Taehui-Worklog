@@ -14,13 +14,48 @@
 
 ---
 
+## 채널 역할 (무엇을 어디에 두나)
+
+작업물의 정본과 기록을 구분한다. 같은 정보를 양쪽에 중복하지 않는다.
+
+| 채널 | 역할 (정본) |
+|------|------------|
+| **Figma** | 디자인 원본 — 화면·컴포넌트의 진짜 모습 |
+| **Taehui-Worklog** (this) | 작업 기록 — 무엇을 했고 어떻게 했나, 진행 현황 |
+
+### What belongs here
+
+- 날짜별 작업 로그 (`{product}/{작업}/YYYY-MM-DD.md`)
+- 재현 가능한 프로세스 가이드·함정 (`guide.md`)
+- 현재 진행 상황 스냅샷 (`CONTEXT.md`, `_CONTEXT.md`)
+
+### What does NOT belong here
+
+- 디자인 결과물의 시각적 원본 → **Figma**가 정본
+- 매번 바뀌는 진행 현황을 README에 → **CONTEXT.md**가 담당
+- 그날 한 작업을 CONTEXT에 → **YYYY-MM-DD.md** 로그가 담당
+
+---
+
 ## 프로덕트
 
-| 프로덕트 | 폴더 | 내용 |
-|----------|------|------|
-| **VestWay** | [vestway/](vestway/) | VestWay 앱 디자인 자동화 — 앱스크린샷 목업, S&P500 로고, Master 플로우 다이어그램 |
-| **RealAcademy** | [realacademy/](realacademy/) | [RA] Live Class Figma 마스터 컴포넌트 중앙화 |
-| **RealClass** | _(작업 기록 시 생성)_ | — |
+| 프로덕트 | 폴더 | Figma 파일 키 | 내용 |
+|----------|------|---------------|------|
+| **VestWay** | [vestway/](vestway/) | `zsbXUBaPLvxiYwOMFCtFsS` | VestWay 앱 디자인 자동화 — 앱스크린샷 목업, S&P500 로고, Master 플로우 다이어그램 |
+| **RealAcademy** | [realacademy/](realacademy/) | `NAy5RTgdGb7UiTU8CcxHL3` | [RA] PAGE UI_Live Class — Figma 마스터 컴포넌트 중앙화 |
+| **RealClass** | _(작업 기록 시 생성)_ | — | — |
+
+---
+
+## 용어 / 약어
+
+| 약어 | 의미 |
+|------|------|
+| **RA** | RealAcademy (예: `[RA] PAGE UI_Live Class`) |
+| **VW** | VestWay |
+| **RC** | RealClass |
+| **V.AI** | VestWay 앱 내 AI 기능 (탭/화면 네이밍에 사용) |
+| **stale** | CONTEXT의 `Last updated`가 최신 로그보다 오래된 상태 → 믿기 전 재확인 |
 
 ---
 
@@ -43,6 +78,17 @@ CONTEXT.md                ← 전체 프로덕트 현황 한눈 요약
 
 ---
 
+## 자동화
+
+| 구성 | 하는 일 |
+|------|---------|
+| **SessionStart 훅** (`~/.claude/settings.json`) | 새 세션마다 `~/Taehui-Worklog` 를 git pull → freshness 검사 → `CONTEXT.md` 를 세션 컨텍스트에 자동 주입 |
+| **`scripts/check-context-freshness.sh`** | 각 CONTEXT의 `Last updated` 를 해당 폴더 최신 `YYYY-MM-DD.md` 와 비교, 오래됐으면 stale 경고 |
+
+로컬 작업 경로는 `~/Taehui-Worklog` 로 고정한다.
+
+---
+
 ## 도구 스택
 
 | 도구 | 용도 |
@@ -51,3 +97,14 @@ CONTEXT.md                ← 전체 프로덕트 현황 한눈 요약
 | Figma MCP | Figma Plugin API 직접 제어 |
 | Node.js + sharp / python + opencv | SVG→PNG 변환, 원근 워프 |
 | GitHub CLI (gh) | 레포 접근, 파일 관리 |
+
+---
+
+## 관련 리소스
+
+| 리소스 | 링크 |
+|--------|------|
+| VestWay 디자인 (Figma) | https://www.figma.com/design/zsbXUBaPLvxiYwOMFCtFsS |
+| RA PAGE UI_Live Class (Figma) | https://www.figma.com/design/NAy5RTgdGb7UiTU8CcxHL3 |
+
+<!-- 자주 쓰는 브랜드 가이드·외부 문서가 생기면 여기에 추가 -->
