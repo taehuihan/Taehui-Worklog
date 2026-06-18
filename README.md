@@ -10,6 +10,8 @@
 
 새 세션은 [CONTEXT.md](CONTEXT.md)(전체 현황) → 작업할 `{product}/_CONTEXT.md`(프로덕트 상세) 순으로 읽고 시작한다.
 
+먼저 `bash scripts/check-context-freshness.sh` 를 실행해 CONTEXT 스냅샷이 최신 로그보다 오래(stale)됐는지 확인한다. ⚠️ 경고가 나온 CONTEXT는 곧이곧대로 믿지 말고 실제 로그·git 상태를 먼저 확인한다.
+
 ---
 
 ## 프로덕트
