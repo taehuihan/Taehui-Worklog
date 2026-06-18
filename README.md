@@ -39,11 +39,13 @@
 
 ## 프로덕트
 
-| 프로덕트 | 폴더 | Figma 파일 키 | 내용 |
-|----------|------|---------------|------|
-| **VestWay** | [vestway/](vestway/) | `zsbXUBaPLvxiYwOMFCtFsS` | VestWay 앱 디자인 자동화 — 앱스크린샷 목업, S&P500 로고, Master 플로우 다이어그램 |
-| **RealAcademy** | [realacademy/](realacademy/) | `NAy5RTgdGb7UiTU8CcxHL3` | [RA] PAGE UI_Live Class — Figma 마스터 컴포넌트 중앙화 |
-| **RealClass** | _(작업 기록 시 생성)_ | — | — |
+각 프로덕트의 진행 작업·현황은 해당 폴더의 `_CONTEXT.md` 를 본다. (README는 색인만 둔다)
+
+| 프로덕트 | 폴더 | Figma 파일 키 |
+|----------|------|---------------|
+| **VestWay** | [vestway/](vestway/) | `zsbXUBaPLvxiYwOMFCtFsS` |
+| **RealAcademy** | [realacademy/](realacademy/) | `NAy5RTgdGb7UiTU8CcxHL3` |
+| **RealClass** | _(작업 기록 시 생성)_ | — |
 
 ---
 
