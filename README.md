@@ -4,8 +4,6 @@
 
 여러 프로덕트(**RealAcademy · VestWay · RealClass**)의 디자인 작업을 Claude + Figma MCP로 자동화한 기록을 **프로덕트 단위**로 관리한다.
 
----
-
 ## 시작하기
 
 로컬 작업 경로는 `~/Taehui-Worklog` 로 고정한다.
@@ -13,8 +11,6 @@
 새 세션은 [CONTEXT.md](CONTEXT.md)(전체 현황) → 작업할 `{product}/_CONTEXT.md`(프로덕트 상세) 순으로 읽고 시작한다.
 
 먼저 `bash scripts/check-context-freshness.sh` 를 실행해 CONTEXT 스냅샷이 최신 로그보다 오래(stale)됐는지 확인한다. ⚠️ 경고가 나온 CONTEXT는 곧이곧대로 믿지 말고 실제 로그·git 상태를 먼저 확인한다.
-
----
 
 ## 채널 역할 (무엇을 어디에 두나)
 
@@ -37,8 +33,6 @@
 - 매번 바뀌는 진행 현황을 README에 → **CONTEXT.md**가 담당
 - 그날 한 작업을 CONTEXT에 → **YYYY-MM-DD.md** 로그가 담당
 
----
-
 ## 폴더 구조
 
 **프로덕트가 1차 분류축**이고, 그 아래에 작업(태스크) 단위 폴더를 둔다.
@@ -55,8 +49,6 @@ CONTEXT.md                ← 전체 프로덕트 현황 한눈 요약
 - **`guide.md`** = 시간이 지나도 유효한 "어떻게 하는가" (정제된 가이드)
 - **`YYYY-MM-DD.md`** = 그날의 raw 기록 (무엇을 했고 무엇이 막혔나)
 - **`_CONTEXT.md` / `CONTEXT.md`** = "지금 어디까지 했나" 스냅샷 (세션 시작용)
-
----
 
 ## 관련 리소스
 
