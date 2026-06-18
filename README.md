@@ -47,18 +47,6 @@
 
 ---
 
-## 용어 / 약어
-
-| 약어 | 의미 |
-|------|------|
-| **RA** | RealAcademy (예: `[RA] PAGE UI_Live Class`) |
-| **VW** | VestWay |
-| **RC** | RealClass |
-| **V.AI** | VestWay 앱 내 AI 기능 (탭/화면 네이밍에 사용) |
-| **stale** | CONTEXT의 `Last updated`가 최신 로그보다 오래된 상태 → 믿기 전 재확인 |
-
----
-
 ## 폴더 구조
 
 **프로덕트가 1차 분류축**이고, 그 아래에 작업(태스크) 단위 폴더를 둔다.
