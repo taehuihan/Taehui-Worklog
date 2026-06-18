@@ -3,8 +3,6 @@
 > 상세 이력은 각 작업 폴더의 `YYYY-MM-DD.md` 참조.
 > Last updated: 2026-06-18
 
-> ⚠️ 분류 확인 필요: `ra-live-class`는 파일명 `🔍[RA] PAGE UI_Live Class` 의 **[RA] 태그**를 근거로 RealAcademy로 분류했다. 만약 이 작업이 RealClass 제품 소속이면 `realclass/` 폴더로 옮긴다.
-
 ---
 
 ## 작업별 현황
