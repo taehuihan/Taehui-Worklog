@@ -2,7 +2,7 @@
 
 > 새 세션이 "지금 어디까지 했나"를 한눈에 잡는 파일.
 > 상세 이력은 각 프로덕트 폴더의 `_CONTEXT.md` 와 `{작업}/YYYY-MM-DD.md` 를 본다.
-> Last updated: 2026-06-18
+> Last updated: 2026-06-22
 
 ---
 
@@ -19,7 +19,7 @@
 
 | 프로덕트 | 폴더 | 현재 상태 | 다음 |
 |----------|------|-----------|------|
-| **VestWay** | [vestway/](vestway/) | app-screenshots 260617 섹션 1~8 교체 완료 / sp500-logo 완료 / master-flow 진행중 | master-flow v1 커넥터 |
+| **VestWay** | [vestway/](vestway/) | app-screenshots·sp500 완료 / **master-flow v3(16245:20440)** — 네이밍=뎁스 모델 재정립, 커넥터 뎁스간만, 트리거=bbox시작점 최근접. SSOT(16097:3930)+git guide.md 동기화(06-22) | home→bloomberg 트리거 정밀화, v2/구버전 정리, 상태레이블 검수 |
 | **RealAcademy** | [realacademy/](realacademy/) | ra-live-class 마스터 컴포넌트 중앙화 진행 | 후속 확인 |
 | **RealClass** | _(폴더 예정)_ | 작업 기록 시 생성 | — |
 

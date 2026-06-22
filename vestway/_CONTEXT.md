@@ -1,7 +1,7 @@
 # VestWay — 현재 상태 스냅샷
 
 > 상세 이력은 각 작업 폴더의 `YYYY-MM-DD.md`, 프로세스는 `guide.md` 참조.
-> Last updated: 2026-06-18
+> Last updated: 2026-06-22 (master-flow v3 + 네이밍=뎁스 모델 재정립, SSOT/git 갱신)
 
 ---
 
@@ -18,7 +18,7 @@
 |------|------|------|------|
 | 앱스크린샷 목업 교체 | [app-screenshots/](app-screenshots/) | 260617 섹션 1~8번 `vaihome-following1` 교체 완료 | 다음 화면 업데이트 시 동일 워크플로 |
 | S&P 500 로고 컴포넌트 | [sp500-logo/](sp500-logo/) | **전체 완료** (564개) | 신규 종목 편입 시만 |
-| Master 플로우 다이어그램 | [master-flow/](master-flow/) | vai/ 재건·v1/ 화면 44개 배치 완료 | **v1/ 커넥터 미완** |
+| Master 플로우 다이어그램 | [master-flow/](master-flow/) | **현행 v3 `16245:20440`** (네이밍=뎁스 모델, gap60, 커넥터 뎁스간만, 트리거=bbox시작점 최근접). v2(16210)는 구버전. 규칙은 SSOT(16097:3930)+git guide.md 동기화(06-22) | home→bloomberg 트리거 정밀화, v2/구버전 정리, 상태레이블 검수 |
 
 ---
 
