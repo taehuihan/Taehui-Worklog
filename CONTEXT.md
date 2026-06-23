@@ -19,7 +19,7 @@
 
 | 프로덕트 | 폴더 | 현재 상태 | 다음 |
 |----------|------|-----------|------|
-| **VestWay** | [vestway/](vestway/) | app-screenshots·sp500 완료 / **master-flow v3(16245:20440)** — 네이밍=뎁스 모델 재정립, 커넥터 뎁스간만, 트리거=bbox시작점 최근접. SSOT(16097:3930)+git guide.md 동기화(06-22) | home→bloomberg 트리거 정밀화, v2/구버전 정리, 상태레이블 검수 |
+| **VestWay** | [vestway/](vestway/) | master-flow **v3(16245:20440)** 네이밍=뎁스 모델 + **내정보 플로우(16297:15585)** 확인모달 규칙·자동 트리거 매칭. 규칙 SSOT(16097:3930) 반영, git guide.md는 v3까지(06-22) | 확인모달 규칙 가이드 정식화, git/메모리 스냅샷, 상태레이블 검수 |
 | **RealAcademy** | [realacademy/](realacademy/) | ra-live-class 마스터 컴포넌트 중앙화 진행 | 후속 확인 |
 | **RealClass** | _(폴더 예정)_ | 작업 기록 시 생성 | — |
 
