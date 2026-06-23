@@ -1,7 +1,7 @@
 # VestWay — 현재 상태 스냅샷
 
 > 상세 이력은 각 작업 폴더의 `YYYY-MM-DD.md`, 프로세스는 `guide.md` 참조.
-> Last updated: 2026-06-22 (master-flow v3 + 네이밍=뎁스 모델 재정립, SSOT/git 갱신)
+> Last updated: 2026-06-23 (내정보 커넥터 라우팅 규칙 + DEPTH_GAP 800 표준화)
 
 ---
 
