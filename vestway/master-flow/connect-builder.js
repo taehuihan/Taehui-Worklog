@@ -138,3 +138,41 @@ function buildConnectors(sec, specs) {
   }
   return report;
 }
+
+/**
+ * ── 트리거 맵 추출 프로세스 (빌드 前 0단계, "누락 0" 설계) ─────────────
+ * 위→아래(커넥터) + 아래→위(버튼) 양방향으로 봐야 누락이 0이 된다.
+ *  1. 소스 네이티브 커넥터 **전수** 읽기 (모든 상태·일부만 ❌·position기반도 포함)
+ *  2. 각 커넥터 출발점 → **리프 트리거** 해석. 출발이 컨테이너(카드)면
+ *     **도착 라벨로 안쪽 버튼 특정** (card→결과확인 ⇒ "결과 확인" 버튼, card→종목선택 ⇒ "수정하기")
+ *  3. crossCheckTriggers()로 **버튼 전수 대조** (아래→위 안전망):
+ *     - 커버(자기/조상/자손이 커넥터 출발) → 자동 ✓ (사람 검토 X)
+ *     - 제외(per-flow 제외목록: 탭바·토글·조건부모달 등) → 자동 (사람 검토 X)
+ *     - ⚠️검토(나머지) → 사람이 **소수만** "연결/제외" 1회 판정. 제외는 목록에 기억 → 다음엔 자동.
+ * 핵심: 1·2만 하면 *커넥터 자체가 빠진 전환*(예: 챌린지 안내가 소스에 없던 때)을 영영 못 잡음.
+ *       3(버튼 전수)이 그 안전망. 단 부담은 "전수검토"가 아니라 "의심 소수 1회 판정".
+ *
+ * 사용:
+ *   const startIds = new Set(소스커넥터.map(c=>c.connectorStart.endpointNodeId));
+ *   crossCheckTriggers(홈화면노드, startIds, ['PRO를 구독','Button_square']); // 제외목록
+ */
+function crossCheckTriggers(homeNode, startNodeIds, exclude) {
+  exclude = exclude || [];
+  const hb = homeNode.absoluteBoundingBox;
+  const covered = n => {
+    let p = n; while (p) { if (startNodeIds.has(p.id)) return true; p = p.parent; }      // 자기/조상(카드)
+    return homeNode === n ? false : n.findAll(x => startNodeIds.has(x.id)).length > 0;   // 자손
+  };
+  const ch = n => n.type === 'TEXT' ? (n.characters || '') : '';
+  const clicks = homeNode.findAll(n => n.absoluteBoundingBox &&
+    ((['INSTANCE', 'COMPONENT'].includes(n.type) && /button|cta|arrow/i.test(n.name || '')) ||
+     (n.type === 'TEXT' && /Primary/i.test(n.name || ''))));
+  return clicks.map(n => {
+    const b = n.absoluteBoundingBox, cy = Math.round(b.y + b.height / 2 - hb.y);
+    const label = (ch(n) || n.name || '').slice(0, 16);
+    let v = '⚠️검토';
+    if (covered(n)) v = '커버';
+    else if (exclude.some(e => label.includes(e))) v = '제외';
+    return { el: label, cy, 판정: v };
+  });
+}
