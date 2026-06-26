@@ -32,9 +32,11 @@
  * ── 한계 (반드시 인지) ──────────────────────────────────────────
  *  • 수치검증(관통·도착·꺾임)은 **트리거의 *의미* 오류를 못 잡는다.** 엉뚱한 동명 아이콘을 잡아도
  *    기하적으론 통과함. 빌드 후 **소스 네이티브 커넥터/시각 대조 필수**. report의 ambiguous=true 주의.
+ *  • **「행 배치 *의미*」 오류도 같은 한계.** 행간격(837)·도착center 수치검증은 통과해도, 다른 화면을
+ *    한 행에 잘못 묶은 건 못 잡는다 → 빌드 전 verifyRowBranching(specs)로 가드. (블룸버그 v2, 2026-06-26)
  *  • selling→약관안내처럼 소스에 트리거가 없는 전환은 스펙에 넣지 말 것(날조 금지).
  *
- * 갱신 이력: 2026-06-24 정본화. (트리거=행컨테이너우측·동명모호성·firstBend+20·관통0·레인분리·도착중앙)
+ * 갱신 이력: 2026-06-24 정본화 / 2026-06-26 verifyRowBranching 추가(다른 화면=분기행 가드).
  */
 function buildConnectors(sec, specs) {
   const SX = sec.absoluteBoundingBox.x, SY = sec.absoluteBoundingBox.y;
@@ -175,4 +177,39 @@ function crossCheckTriggers(homeNode, startNodeIds, exclude) {
     else if (exclude.some(e => label.includes(e))) v = '제외';
     return { el: label, cy, 판정: v };
   });
+}
+
+/**
+ * ── 행 배치 분기 검증 (빌드 前, 「다른 화면=분기행」 누락 가드) ──────────
+ * 누락 사례(블룸버그 v2): 홈무료의 chevron→설명, 카드→상세(무료)를 "무료 유저 경로"라는
+ * 편의로 한 행에 묶음. 둘은 *다른 트리거*로 가는 *다른 화면*이라 분기행이어야 함.
+ *
+ * 규칙: 한 출발화면(from)에서 *트리거가 다른* 커넥터들의 도착화면(to)이 **같은 행 y**에 있으면 ⚠️.
+ *       (같은 트리거 = 같은 화면의 다른 스테이트 → 같은 행 OK)
+ * specs: buildConnectors와 동일 형식. trig.text|trig.name으로 트리거 동일성 판단.
+ * 반환: [{from, triggers:[...], sameRowYs:[...], warn:true}] — warn 있으면 행 분리 검토.
+ */
+function verifyRowBranching(specs) {
+  const rowOf = y => Math.round(y / 100);                 // 행 식별(±100px 허용)
+  const trigKey = s => (s.trig && (s.trig.text || s.trig.name)) || '∅';
+  const byFrom = {};
+  specs.forEach(s => {
+    const k = s.from[0] + ',' + s.from[1];
+    (byFrom[k] = byFrom[k] || []).push(s);
+  });
+  const out = [];
+  Object.entries(byFrom).forEach(([from, group]) => {
+    // 트리거가 서로 다른 도착들 중, 같은 행 y에 몰린 게 있나?
+    const byRow = {};
+    group.forEach(s => { const r = rowOf(s.to[1]); (byRow[r] = byRow[r] || []).push(s); });
+    Object.values(byRow).forEach(rowSpecs => {
+      const trigs = [...new Set(rowSpecs.map(trigKey))];
+      if (rowSpecs.length > 1 && trigs.length > 1) {
+        out.push({ from, triggers: trigs, sameRowY: rowSpecs[0].to[1],
+          names: rowSpecs.map(s => s.name), warn: true,
+          msg: '다른 트리거의 다른 화면이 같은 행 → 분기행으로 분리 검토' });
+      }
+    });
+  });
+  return out.length ? out : [{ ok: true, msg: '행 배치 분기 위반 없음' }];
 }
