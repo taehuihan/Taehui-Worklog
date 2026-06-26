@@ -187,10 +187,13 @@ function crossCheckTriggers(homeNode, startNodeIds, exclude) {
  * 규칙: 한 출발화면(from)에서 *트리거가 다른* 커넥터들의 도착화면(to)이 **같은 행 y**에 있으면 ⚠️.
  *       (같은 트리거 = 같은 화면의 다른 스테이트 → 같은 행 OK)
  * specs: buildConnectors와 동일 형식. trig.text|trig.name으로 트리거 동일성 판단.
- * 반환: [{from, triggers:[...], sameRowYs:[...], warn:true}] — warn 있으면 행 분리 검토.
+ * segmentRowYs: 유저 세그먼트(구매상태)로 의도 분리한 행의 도착 y 목록(guide §2-2). 그 행은
+ *   다른 화면 가로 나열이 정상이므로 검사 제외(세그먼트 규칙 > §5 분기행). ±100px 같은 행이면 매칭.
+ * 반환: [{from, triggers:[...], sameRowY, warn:true}] — warn 있으면 행 분리 검토.
  */
-function verifyRowBranching(specs) {
+function verifyRowBranching(specs, segmentRowYs) {
   const rowOf = y => Math.round(y / 100);                 // 행 식별(±100px 허용)
+  const segRows = new Set((segmentRowYs || []).map(rowOf));
   const trigKey = s => (s.trig && (s.trig.text || s.trig.name)) || '∅';
   const byFrom = {};
   specs.forEach(s => {
@@ -202,12 +205,13 @@ function verifyRowBranching(specs) {
     // 트리거가 서로 다른 도착들 중, 같은 행 y에 몰린 게 있나?
     const byRow = {};
     group.forEach(s => { const r = rowOf(s.to[1]); (byRow[r] = byRow[r] || []).push(s); });
-    Object.values(byRow).forEach(rowSpecs => {
+    Object.entries(byRow).forEach(([row, rowSpecs]) => {
+      if (segRows.has(Number(row))) return;               // 세그먼트 행은 가로 나열 정상 → 제외
       const trigs = [...new Set(rowSpecs.map(trigKey))];
       if (rowSpecs.length > 1 && trigs.length > 1) {
         out.push({ from, triggers: trigs, sameRowY: rowSpecs[0].to[1],
           names: rowSpecs.map(s => s.name), warn: true,
-          msg: '다른 트리거의 다른 화면이 같은 행 → 분기행으로 분리 검토' });
+          msg: '다른 트리거의 다른 화면이 같은 행 → 분기행으로 분리 검토(세그먼트 행이면 segmentRowYs로 제외)' });
       }
     });
   });
