@@ -2,7 +2,7 @@
 
 > 새 세션이 "지금 어디까지 했나"를 한눈에 잡는 파일.
 > 상세 이력은 각 프로덕트 폴더의 `_CONTEXT.md` 와 `{작업}/YYYY-MM-DD.md` 를 본다.
-> Last updated: 2026-06-26
+> Last updated: 2026-06-29
 
 ---
 
@@ -19,7 +19,7 @@
 
 | 프로덕트 | 폴더 | 현재 상태 | 다음 |
 |----------|------|-----------|------|
-| **VestWay** | [vestway/](vestway/) | master-flow: 블룸버그 기억리셋 재빌드(16503:28646)·설명/상세무료 **분기행** 수정. **「다른 화면=분기행」 가드 4곳**(SSOT ★행배치가드·guide §9·connect-builder verifyRowBranching·메모리) — 어제 트리거 의미 오류와 같은 뿌리(수치검증≠의미검증). git/메모리 동기화 완료(06-26) | 기존 섹션 position 트리거 함정 점검, v3 DEPTH_GAP 800 |
+| **VestWay** | [vestway/](vestway/) | master-flow: 블룸버그 재제작 테스트(`16524:28640`)로 **§2-2 가이드 버그 발견·교정** — 세그먼트는 "라벨", 배치는 항상 §5 분기행(진입점 다르면 같은 세그먼트라도 다른 행). 교훈: **"가이드 버그=재현 버그"**(기억 리셋해도 SSOT 자체가 틀리면 오류 재현). guide §2-2·SSOT노드·connect-builder·메모리 동기화(06-29) | 기존 섹션 position 트리거 함정 점검, 세그먼트 모델 타 섹션 적용 |
 | **RealAcademy** | [realacademy/](realacademy/) | ra-live-class 마스터 컴포넌트 중앙화 진행 | 후속 확인 |
 | **RealClass** | _(폴더 예정)_ | 작업 기록 시 생성 | — |
 
