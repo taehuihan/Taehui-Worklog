@@ -19,7 +19,7 @@
 
 | 프로덕트 | 폴더 | 현재 상태 | 다음 |
 |----------|------|-----------|------|
-| **VestWay** | [vestway/](vestway/) | master-flow: 블룸버그 재제작 테스트(`16524:28640`)로 **§2-2 가이드 버그 발견·교정** — 세그먼트는 "라벨", 배치는 항상 §5 분기행(진입점 다르면 같은 세그먼트라도 다른 행). 교훈: **"가이드 버그=재현 버그"**(기억 리셋해도 SSOT 자체가 틀리면 오류 재현). guide §2-2·SSOT노드·connect-builder·메모리 동기화(06-29) | 기존 섹션 position 트리거 함정 점검, 세그먼트 모델 타 섹션 적용 |
+| **VestWay** | [vestway/](vestway/) | master-flow: **섹션 업데이트 워크플로 §10 신설**(이름 diff·화면식별 네이밍하드코딩금지·Archive 삭제·추가/교체/rename·섹션 cascade) + 블룸버그(`16524:28640`) 첫 업데이트(설명 split·튜토리얼 D1 추가+시프트·Archive `16532`). §2-2 세그먼트=라벨 교정. 교훈: **"가이드·로직 버그=재현 버그"**. guide·SSOT note·connect-builder·메모리 동기화(06-29) | 기존 섹션 position 트리거 점검, 세그먼트·업데이트 워크플로 타 섹션 적용 |
 | **RealAcademy** | [realacademy/](realacademy/) | ra-live-class 마스터 컴포넌트 중앙화 진행 | 후속 확인 |
 | **RealClass** | _(폴더 예정)_ | 작업 기록 시 생성 | — |
 
