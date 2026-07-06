@@ -10,7 +10,7 @@ prompt=$(printf '%s' "$input" | python3 -c "import sys,json; print(json.load(sys
 if printf '%s' "$prompt" | grep -qiE "플로우|커넥터|다이어그램|뎁스|depth|밴드|서브레이블|상태레이블|섹션 ?(생성|재빌드|만들|배치|추가)|master ?페이지|master-flow|블룸버그.*섹션|챌린지.*플로우|내정보.*플로우|v\.?ai.*플로우"; then
   GUIDE="$HOME/Taehui-Worklog/vestway/master-flow/guide.md"
   echo "⚠️ [플로우 작업 가드] 빌드 전 필수 — 기억 복원 금지, SSOT 실측부터:"
-  echo "  1. SSOT Figma 16097:3930 직접 실측 (압축·세션전환 직후 기억에서 복원 ❌)"
+  echo "  1. SSOT = guide.md + connect-builder.js 직접 Read (압축·세션전환 직후 기억에서 복원 ❌ · Figma 16097은 2026-07-06 동결 스냅샷)"
   echo "  2. 기준섹션 16037 레이블 배치 실측 — 서브레이블=뎁스(열)별 콘텐츠명 / 상태레이블=화면별 / 단일화면은 상태레이블 생략"
   echo "  3. 0단계 트리거맵 작성 → 행 배치 도출: '다른 트리거→다른 도착화면 N개 = 분기행 N개' (다른 화면을 한 행에 묶지 말 것)"
   echo "  4. 화면·라벨 y는 guide.md §2 수직공식으로 계산 (즉흥 상수 ❌)"

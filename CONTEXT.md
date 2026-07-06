@@ -2,7 +2,7 @@
 
 > 새 세션이 "지금 어디까지 했나"를 한눈에 잡는 파일.
 > 상세 이력은 각 프로덕트 폴더의 `_CONTEXT.md` 와 `{작업}/YYYY-MM-DD.md` 를 본다.
-> Last updated: 2026-06-29
+> Last updated: 2026-07-06
 
 ---
 
@@ -19,15 +19,16 @@
 
 | 프로덕트 | 폴더 | 현재 상태 | 다음 |
 |----------|------|-----------|------|
-| **VestWay** | [vestway/](vestway/) | master-flow: **섹션 업데이트 워크플로 §10 신설**(이름 diff·화면식별 네이밍하드코딩금지·Archive 삭제·추가/교체/rename·섹션 cascade) + 블룸버그(`16524:28640`) 첫 업데이트(설명 split·튜토리얼 D1 추가+시프트·Archive `16532`). §2-2 세그먼트=라벨 교정. 교훈: **"가이드·로직 버그=재현 버그"**. guide·SSOT note·connect-builder·메모리 동기화(06-29) | 기존 섹션 position 트리거 점검, 세그먼트·업데이트 워크플로 타 섹션 적용 |
-| **RealAcademy** | [realacademy/](realacademy/) | ra-live-class 마스터 컴포넌트 중앙화 진행 | 후속 확인 |
+| **VestWay** | [vestway/](vestway/) | master-flow: **SSOT md 전환(07-06)** — guide.md+connect-builder.js가 단일 기준, Figma 16097 동결(§4-1 스타일·분기행순서 이관 완료) + **규칙1.5 버튼조상**(태블릿 트리거 갭 2건 수정) + **스킬 공용화**(`.claude/skills/master-flow-*`, 개인 커맨드는 포인터). 이전: §10 업데이트 워크플로·블룸버그 업데이트(06-29) | 기존 섹션 position 트리거 점검, 다른 디자이너 스킬 온보딩 피드백 |
+| **RealAcademy** | [realacademy/](realacademy/) | **master-flow 신설(07-06)**: 학습 커스텀 플로우 섹션(`50686:3312`, RA 파일 Master) — 화면 9·커넥터 3·검증 전항 통과. 태블릿 1280 편차는 `realacademy/master-flow/guide.md` · ra-live-class 마스터 컴포넌트 중앙화 진행 | RA 추가 소스 섹션 정리 시 동일 워크플로 |
 | **RealClass** | _(폴더 예정)_ | 작업 기록 시 생성 | — |
 
 ---
 
 ## 활성 대상 파일 / 공통 주의
 
-- **VestWay Figma**: `zsbXUBaPLvxiYwOMFCtFsS` (현재 모든 Figma 요청은 테스트 파일로 범위 제한)
+- **VestWay Figma**: `zsbXUBaPLvxiYwOMFCtFsS` + 테스트 `TCFQPUYWPmBmwcpo7cCu8w` · **RA Figma**: `MOJH4fo6X8hy7tfr3Spxuv` (실제 파일은 사용자 명시 지정 시)
+- **플로우 규칙 SSOT**: `vestway/master-flow/guide.md` + `connect-builder.js` (Figma 16097은 2026-07-06부로 동결 스냅샷)
 - **공통 함정**: 이 Figma 환경엔 `Pretendard` 폰트 미설치 → `text.characters=` 직접 수정/`loadFontAsync` 막힘. 워딩 교체는 텍스트 노드 `clone()`으로 우회.
 
 ---

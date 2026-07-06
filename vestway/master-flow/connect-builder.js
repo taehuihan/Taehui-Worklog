@@ -21,8 +21,10 @@
  *               ⚠️ 동명 아이콘(arrow_right 등 다중 매칭)을 name으로 질의하면 엉뚱한 걸 잡음 → text로.
  *
  * ── 강제하는 규칙 (전부 코드 불변식 + 결과 실측 검증) ──────────────
- *  1. 출발 = 트리거 컴포넌트 모서리. 메뉴/리스트 행이면 **라벨 cy 최근접 '우측 끝 아이콘'**(셰브론/화살표),
- *     넓은 카드/버튼·독립 링크는 자기 우측. (라벨 텍스트 모서리 ❌) — 행컨테이너는 아이콘 없을 때 폴백.
+ *  1. 출발 = 트리거 컴포넌트 모서리. 텍스트 라벨이 **좁은 버튼형 조상**(INSTANCE/COMPONENT h≤80 폭<0.5W)
+ *     안에 있으면 그 버튼 우측(규칙1.5 — CTA/pill, 태블릿 1280 검증). 메뉴/리스트 행(넓은 행)이면
+ *     **라벨 cy 최근접 '우측 끝 아이콘'**(셰브론/화살표), 넓은 카드/버튼·독립 링크는 자기 우측.
+ *     (라벨 텍스트 모서리 ❌) — 행컨테이너는 아이콘 없을 때 폴백.
  *  2. 첫 방향전환 = 트리거 화면 우측 +20px 이후 (firstBend_x ≥ from.right+20).
  *  3. 화면 관통 0 — 출발/도착 외 모든 화면 bbox와 충돌검사 통과한 경로만 채택(자동 위/아래 우회).
  *  4. 도착 = 도착 화면 좌변 세로 중앙.
@@ -36,7 +38,9 @@
  *    한 행에 잘못 묶은 건 못 잡는다 → 빌드 전 verifyRowBranching(specs)로 가드. (블룸버그 v2, 2026-06-26)
  *  • selling→약관안내처럼 소스에 트리거가 없는 전환은 스펙에 넣지 말 것(날조 금지).
  *
- * 갱신 이력: 2026-06-24 정본화 / 2026-06-26 verifyRowBranching 추가(다른 화면=분기행 가드).
+ * 갱신 이력: 2026-06-24 정본화 / 2026-06-26 verifyRowBranching 추가(다른 화면=분기행 가드) /
+ *   2026-07-06 규칙1.5 버튼조상 추가 — 태블릿(1280)에서 비율 상수(0.55W/0.3W/0.5W)가 CTA(397px)·pill을
+ *   전부 탈락시켜 텍스트 폴백(버튼 안 텍스트 우측)·우측끝아이콘 오인(book 아이콘)이 발생한 갭 수정 (RA 학습 커스텀).
  */
 function buildConnectors(sec, specs) {
   const SX = sec.absoluteBoundingBox.x, SY = sec.absoluteBoundingBox.y;
@@ -62,6 +66,14 @@ function buildConnectors(sec, specs) {
     // 1) 넓은 카드/버튼 → 자기 우측
     if (ab.width > sb.width * 0.55)
       return { x2: Math.round(ab.x + ab.width - SX), cy: Math.round(cy - SY), ambiguous, via: '요소자체' };
+    // 1.5) 텍스트 매치 → 좁은 버튼형 조상(INSTANCE/COMPONENT, h≤80, 폭<0.5W) 우측 — CTA·pill 버튼.
+    //     화면폭 무관(비율 상수가 태블릿 1280에서 CTA를 전부 탈락시키는 갭 수정, 2026-07-06).
+    //     넓은 메뉴행(≥0.5W)은 건너뜀 → 기존 2) 우측끝아이콘 동작 보존.
+    if (q.text) { let bp = a.parent;
+      while (bp && bp !== scr.node) { const bb = bp.absoluteBoundingBox;
+        if (bb && ['INSTANCE', 'COMPONENT'].includes(bp.type) && bb.height <= 80 && bb.width < sb.width * 0.5)
+          return { x2: Math.round(bb.x + bb.width - SX), cy: Math.round(bb.y + bb.height / 2 - SY), ambiguous, via: '버튼조상' };
+        bp = bp.parent; } }
     // 2) 라벨 cy에 '가장 가까운' 우측 끝 아이콘(작은 인터랙티브, 화면 우측 70px 내, ±65).
     //    촘촘한 메뉴행은 최근접으로 구분, 라벨-아이콘 세로 오프셋(상금 행 등)도 포착. 시작 y는 아이콘 cy.
     let ric = scr.node.findAll(n => { const b = n.absoluteBoundingBox;
@@ -187,9 +199,8 @@ function crossCheckTriggers(homeNode, startNodeIds, exclude) {
  * 규칙: 한 출발화면(from)에서 *트리거가 다른* 커넥터들의 도착화면(to)이 **같은 행 y**에 있으면 ⚠️.
  *       (같은 트리거 = 같은 화면의 다른 스테이트 → 같은 행 OK)
  * specs: buildConnectors와 동일 형식. trig.text|trig.name으로 트리거 동일성 판단.
- * ⚠️ §5는 항상 적용 — 유저 세그먼트가 같아도 다른 트리거→다른 화면이면 분기행이어야 한다(guide §2-2 라벨 모델).
- *    구버전의 segmentRowYs 예외(세그먼트 행 가로 나열 허용)는 **폐기**(2026-06-29): 세그먼트는 라벨일 뿐
- *    배치 축이 아니므로 예외를 두면 진입점 다른 화면이 한 행에 잘못 묶인다.
+ * ⚠️ §5는 세그먼트 내에서도 항상 적용 — 같은 세그먼트 안에서도 다른 트리거→다른 화면이면 분기행(guide §2-2).
+ *    세그먼트 자체는 별도 행 그룹으로 분리(§2-2). 세그먼트 내 화면 분기에도 §5 적용.
  * 반환: [{from, triggers:[...], sameRowY, warn:true}] — warn 있으면 행 분리.
  */
 function verifyRowBranching(specs) {
