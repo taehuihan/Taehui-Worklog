@@ -50,15 +50,6 @@ echo '{"prompt":"오늘 날씨?"}'              | bash ~/Taehui-Worklog/scripts/
 
 ---
 
-## 스킬 셋업 (다른 디자이너용, 2026-07-06)
+## 스킬 셋업 (다른 디자이너용)
 
-Master 플로우 스킬 2종이 레포에 포함되어 있다: `.claude/skills/master-flow-new/`, `.claude/skills/master-flow-update/`
-
-**쓰는 법 (택1):**
-1. **레포에서 열기 (권장)** — 이 레포를 clone 후 레포 루트에서 Claude Code 실행 → `/master-flow-new`, `/master-flow-update` 자동 인식.
-2. **개인 설치** — 어디서나 쓰려면 `.claude/skills/master-flow-*` 를 자기 `~/.claude/skills/` 로 복사. 단, 스킬이 레포 상대 경로(guide.md 등)를 참조하므로 레포 clone은 필수.
-
-**사전 조건:**
-- Claude Code + Figma MCP 연결 (claude.ai Figma)
-- 대상 Figma 파일 접근 권한 (VestWay 테스트 파일 `TCFQPUYWPmBmwcpo7cCu8w` — 기준섹션 실측용 포함)
-- 규칙 SSOT는 `_shared/master-flow/guide.md` + `connect-builder.js` (프로덕트 무관 중앙 위치. Figma 가이드 문서 16097은 2026-07-06부로 동결 스냅샷)
+이 문서는 **hook** 설치만 다룬다. master-flow 스킬(`/master-flow-new`·`/master-flow-update`) 셋업 — clone 경로·사전 조건·쓰는 법 — 은 레포 최상위 [README.md](../README.md)의 **"다른 디자이너 온보딩"** 섹션이 정본이다. (여기 중복하지 않는다.)
