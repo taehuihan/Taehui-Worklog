@@ -8,7 +8,7 @@ prompt=$(printf '%s' "$input" | python3 -c "import sys,json; print(json.load(sys
 
 # 플로우 작업 키워드 (master-flow 다이어그램 특정 — 광범위한 'figma'는 제외해 오발동 방지)
 if printf '%s' "$prompt" | grep -qiE "플로우|커넥터|다이어그램|뎁스|depth|밴드|서브레이블|상태레이블|섹션 ?(생성|재빌드|만들|배치|추가)|master ?페이지|master-flow|블룸버그.*섹션|챌린지.*플로우|내정보.*플로우|v\.?ai.*플로우"; then
-  GUIDE="$HOME/Taehui-Worklog/vestway/master-flow/guide.md"
+  GUIDE="$HOME/Taehui-Worklog/_shared/master-flow/guide.md"
   echo "⚠️ [플로우 작업 가드] 빌드 전 필수 — 기억 복원 금지, SSOT 실측부터:"
   echo "  1. SSOT = guide.md + connect-builder.js 직접 Read (압축·세션전환 직후 기억에서 복원 ❌ · Figma 16097은 2026-07-06 동결 스냅샷)"
   echo "  2. 기준섹션 16037 레이블 배치 실측 — 서브레이블=뎁스(열)별 콘텐츠명 / 상태레이블=화면별 / 단일화면은 상태레이블 생략"

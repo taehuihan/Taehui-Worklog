@@ -45,8 +45,8 @@ echo '{"prompt":"오늘 날씨?"}'              | bash ~/Taehui-Worklog/scripts/
 
 ## 규칙 본체
 
-- 체크리스트 상세: `vestway/master-flow/guide.md` (§현행모델·§2-1 레이블모델·작업순서가드) + `connect-builder.js`
-- 규칙 SSOT: `vestway/master-flow/guide.md` + `connect-builder.js` (Figma `16097:3930`은 2026-07-06부로 동결 스냅샷)
+- 체크리스트 상세: `_shared/master-flow/guide.md` (§현행모델·§2-1 레이블모델·작업순서가드) + `connect-builder.js`
+- 규칙 SSOT: `_shared/master-flow/guide.md` + `connect-builder.js` (프로덕트 무관 중앙 위치, 2026-07-08 이관. Figma `16097:3930`은 2026-07-06부로 동결 스냅샷)
 
 ---
 
@@ -61,4 +61,4 @@ Master 플로우 스킬 2종이 레포에 포함되어 있다: `.claude/skills/m
 **사전 조건:**
 - Claude Code + Figma MCP 연결 (claude.ai Figma)
 - 대상 Figma 파일 접근 권한 (VestWay 테스트 파일 `TCFQPUYWPmBmwcpo7cCu8w` — 기준섹션 실측용 포함)
-- 규칙 SSOT는 `vestway/master-flow/guide.md` + `connect-builder.js` (Figma 가이드 문서 16097은 2026-07-06부로 동결 스냅샷)
+- 규칙 SSOT는 `_shared/master-flow/guide.md` + `connect-builder.js` (프로덕트 무관 중앙 위치. Figma 가이드 문서 16097은 2026-07-06부로 동결 스냅샷)

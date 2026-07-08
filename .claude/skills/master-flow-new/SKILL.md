@@ -13,9 +13,9 @@ description: Master 플로우 — 신규 섹션 추가. 소스 섹션(Figma)을 
 
 ## 필수 선행 (빌드 전, 기억 복원 ❌)
 
-1. **파일 Read** (2개 동시) — **규칙 SSOT**:
-   - `vestway/master-flow/guide.md`
-   - `vestway/master-flow/connect-builder.js`
+1. **파일 Read** (2개 동시) — **규칙 SSOT** (프로덕트 무관 중앙 위치):
+   - `_shared/master-flow/guide.md`
+   - `_shared/master-flow/connect-builder.js`
    - ※ Figma 가이드 문서(`16097:3930`)는 2026-07-06부로 동결 — 갱신·참조 ❌
 
 2. **기준섹션 실측** — VestWay 테스트 파일(`TCFQPUYWPmBmwcpo7cCu8w`) Master 페이지:
