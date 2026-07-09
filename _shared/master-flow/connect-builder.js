@@ -26,6 +26,8 @@
  *     **라벨 cy 최근접 '우측 끝 아이콘'**(셰브론/화살표), 넓은 카드/버튼·독립 링크는 자기 우측.
  *     (라벨 텍스트 모서리 ❌) — 행컨테이너는 아이콘 없을 때 폴백.
  *  2. 첫 방향전환 = 트리거 화면 우측 +20px 이후 (firstBend_x ≥ from.right+20).
+ *     예외(이탈 코리도): 같은 화면 다중 출발 중 **오른쪽에 같은-y 형제 트리거**가 있으면(가로지름·겹침),
+ *     그 커넥터는 버튼 우측서 **화면 위/아래(from.y1-44 or y2+44)로 세로 이탈** 후 우측 라우팅 → 겹침·버튼 관통 방지.
  *  3. 화면 관통 0 — 출발/도착 외 모든 화면 bbox와 충돌검사 통과한 경로만 채택(자동 위/아래 우회).
  *  4. 도착 = 도착 화면 좌변 세로 중앙.
  *  5. 팬아웃 레인 분리 — 같은 출발 그룹은 도착(행) 순서로 레인 분산.
@@ -100,13 +102,18 @@ function buildConnectors(sec, specs) {
   const pathHits = (p, obs) => { for (let i = 0; i < p.length - 1; i++) for (const r of obs) if (segHit(p[i], p[i + 1], r)) return r; return null; };
 
   // 경로: 출발(트리거 모서리)→화면+20 직진 후 첫꺾임→갭/우회→도착 화면 좌변 중앙
-  function route(from, to, trig, lane) {
+  function route(from, to, trig, lane, corridorY) {
     const s = [trig.x2, trig.cy], t = [to.x1, to.cy], ex = from.x2 + 20;
     const obs = screens.filter(o => o !== from && o !== to);
     const xs = [lane]; const ivs = obs.map(o => [o.x1, o.x2]).sort((a, b) => a[0] - b[0]); let cur = from.x2;
     for (const [a, b] of ivs) { if (a > cur + 20) xs.push((cur + a) >> 1); cur = Math.max(cur, b); }
     xs.push(to.x1 - 60, (from.x2 + to.x1) >> 1);
     const viaXs = xs.filter(x => x >= ex && x < to.x1 + 10);
+    // 이탈 코리도(같은 화면 형제 버튼 회피): 출발 버튼 우측에서 화면 위/아래로 세로 이탈 후 우측 라우팅 → 겹침·버튼 관통 방지
+    if (corridorY != null) {
+      for (const vx of viaXs) { const p = [s, [s[0], corridorY], [vx, corridorY], [vx, t[1]], t]; if (!pathHits(p, obs)) return p; }
+      for (const vx of viaXs) { const p = [s, [s[0], corridorY], [ex, corridorY], [ex, t[1]], [vx, t[1]], t]; if (!pathHits(p, obs)) return p; }
+    }
     const band = obs.filter(o => o.x2 > from.x2 - 20 && o.x1 < to.x1 + 20);
     const tYs = [from.y1 - 44, from.y2 + 44, to.y1 - 44, to.y2 + 44].concat(band.map(o => o.y2 + 44)).concat(band.map(o => o.y1 - 44));
     for (const vx of viaXs) { const p = [s, [vx, s[1]], [vx, t[1]], t]; if (!pathHits(p, obs)) return p; }           // 직진→꺾(vx≥ex)
@@ -123,30 +130,36 @@ function buildConnectors(sec, specs) {
     v.strokeWeight = 2; v.name = 'conn:' + name; sec.appendChild(v);
   }
 
-  // 기존 커넥터 제거 + 레인 배정(같은 출발 그룹, 도착순)
+  // 기존 커넥터 제거 + 화면·트리거 사전 해석 + 레인·이탈 코리도 배정
   sec.children.filter(c => c.name && /^conn:/.test(c.name)).forEach(c => c.remove());
+  specs.forEach(sp => { sp._from = findScreen(...sp.from); sp._to = findScreen(...sp.to);
+    sp._trig = (sp._from && sp._to) ? findTrigger(sp._from, sp.trig) : null; });
   const groups = {};
-  specs.forEach(sp => { (groups[sp.from.join()] = groups[sp.from.join()] || []).push(sp); });
-  for (const k in groups) { const g = groups[k]; const from = findScreen(...g[0].from);
-    g.forEach(sp => { const ts = findScreen(...sp.to); sp._cy = ts.cy; sp._tx = ts.x1; });
-    g.sort((a, b) => a._cy - b._cy || a._tx - b._tx);
-    const minToX = Math.min(...g.map(s => s._tx)), lo = from.x2 + 120, hi = minToX - 60;
-    g.forEach((sp, i) => { sp.lane = g.length > 1 ? Math.round(lo + (hi - lo) * (i + 0.5) / g.length) : Math.round((lo + hi) / 2); }); }
+  specs.forEach(sp => { if (sp._from && sp._to && sp._trig) (groups[sp.from.join()] = groups[sp.from.join()] || []).push(sp); });
+  for (const k in groups) { const g = groups[k]; const from = g[0]._from;
+    g.sort((a, b) => a._to.cy - b._to.cy || a._to.x1 - b._to.x1);
+    const minToX = Math.min(...g.map(s => s._to.x1)), lo = from.x2 + 120, hi = minToX - 60;
+    g.forEach((sp, i) => { sp.lane = g.length > 1 ? Math.round(lo + (hi - lo) * (i + 0.5) / g.length) : Math.round((lo + hi) / 2); });
+    // 이탈 코리도: 트리거 x순 정렬, 오른쪽에 같은-y(±80) 형제 트리거가 있으면(가로지름) 화면 위/아래로 우회
+    const byTx = [...g].sort((a, b) => a._trig.x2 - b._trig.x2);
+    byTx.forEach((sp, i) => { const crossesRight = byTx.slice(i + 1).some(o => Math.abs(o._trig.cy - sp._trig.cy) < 80);
+      sp.corridorY = crossesRight ? (sp._to.cy < sp._trig.cy ? from.y1 - 44 : from.y2 + 44) : null; }); }
 
   // 빌드 + 검증
   const report = [];
   for (const sp of specs) {
-    const from = findScreen(...sp.from), to = findScreen(...sp.to);
+    const from = sp._from, to = sp._to, trig = sp._trig;
     if (!from || !to) { report.push({ n: sp.name, r: '화면못찾음' }); continue; }
-    const trig = findTrigger(from, sp.trig);
     if (!trig) { report.push({ n: sp.name, r: '트리거못찾음' }); continue; }
-    const pts = route(from, to, trig, sp.lane);
+    const pts = route(from, to, trig, sp.lane, sp.corridorY);
     if (!pts) { report.push({ n: sp.name, r: '경로없음(관통회피불가)' }); continue; }
     mkVec(pts, sp.name);
     const b1 = pts[1], l = pts[pts.length - 1];
-    report.push({ n: sp.name, 출발: [trig.x2, trig.cy], via: trig.via,
+    // 첫꺾임: 표준=우측 직진 후 꺾임 / 코리도=버튼 우측서 세로 이탈(같은 x)
+    const firstOK = sp.corridorY != null ? (pts[0][0] === b1[0]) : (pts[0][1] === b1[1] && b1[0] >= from.x2 + 20);
+    report.push({ n: sp.name, 출발: [trig.x2, trig.cy], via: trig.via, corridor: sp.corridorY != null,
       ambiguous: trig.ambiguous || false,
-      첫꺾임: (pts[0][1] === b1[1] && b1[0] >= from.x2 + 20) ? 'ok' : 'VIOLATION',
+      첫꺾임: firstOK ? 'ok' : 'VIOLATION',
       도착중앙: l[1] - to.cy === 0 ? 'ok' : (l[1] - to.cy),
       관통: pathHits(pts, screens.filter(o => o !== from && o !== to)) ? 'HIT' : 'ok' });
   }
