@@ -2,7 +2,7 @@
 
 > 새 세션이 "지금 어디까지 했나"를 한눈에 잡는 파일.
 > 상세 이력은 각 프로덕트 폴더의 `_CONTEXT.md` 와 `{작업}/YYYY-MM-DD.md` 를 본다.
-> Last updated: 2026-07-08
+> Last updated: 2026-07-10
 
 ---
 
@@ -19,8 +19,8 @@
 
 | 프로덕트 | 폴더 | 현재 상태 | 다음 |
 |----------|------|-----------|------|
-| **VestWay** | [vestway/](vestway/) | master-flow: **SSOT md 전환(07-06)** — guide.md+connect-builder.js가 단일 기준, Figma 16097 동결(§4-1 스타일·분기행순서 이관 완료) + **규칙1.5 버튼조상**(태블릿 트리거 갭 2건 수정) + **스킬 공용화**(`.claude/skills/master-flow-*`, 개인 커맨드는 포인터). 이전: §10 업데이트 워크플로·블룸버그 업데이트(06-29) | 기존 섹션 position 트리거 점검, 다른 디자이너 스킬 온보딩 피드백 |
-| **RealAcademy** | [realacademy/](realacademy/) | **master-flow 섹션 2개**: 학습커스텀 `50686:3312`(화면9·커넥터3, 07-06) + **칭찬저금통 `50744:10173`(화면7·커넥터2, 07-08)** — 둘 다 검증 전항 통과. 칭찬저금통은 규칙1.5로 태블릿 CTA 트리거 무보정 통과. 태블릿 1280 편차는 `realacademy/master-flow/guide.md` · ra-live-class 컴포넌트 중앙화 진행 | RA 추가 소스 섹션 정리 시 동일 워크플로 |
+| **VestWay** | [vestway/](vestway/) | master-flow: **SSOT md 전환(07-06)** — guide.md+connect-builder.js가 단일 기준, Figma 16097 동결(§4-1 스타일·분기행순서 이관 완료) + **규칙1.5 버튼조상**(태블릿 트리거 갭 2건 수정) + **스킬 공용화**(`.claude/skills/master-flow-*`, 개인 커맨드는 포인터). 이전: §10 업데이트 워크플로·블룸버그 업데이트(06-29). ⚠️ **공유 SSOT는 07-09~10 대폭 개정**(플로우 단계 워딩·모양 마커·전진 모달·exit-corridor·comp-guide — RA 로그 참조). VestWay 섹션 **밴드 라벨 "Depth N"은 아직 미변경**(원하면 "Flow Step N"으로 통일) | 기존 섹션 position 트리거 점검, VestWay 밴드 Flow Step 통일, 다른 디자이너 스킬 온보딩 피드백 |
+| **RealAcademy** | [realacademy/](realacademy/) | **master-flow**: 학습커스텀 `50686:3312`·칭찬저금통 `50744:10173`·학습커스텀-COMP `50809:12120`. **07-09~10 SSOT 대폭 개정**(공유 guide): 뎁스→"플로우 단계"·밴드 "Flow Step N" / 세그먼트 마커=**모양 기반**(사각형=세그먼트·다이아=분기) / 전진 모달=슬래시 커넥터 / **exit-corridor**(바텀시트 겹침) / **시각확인 필수**. 학습커스텀 3 세그먼트 재구성. **comp-guide.md 신설**(컴포넌트 정리 -COMP). 태블릿 1280 편차·ra-live-class 진행 | ⏭️ `/master-flow-new`에 comp 정리 단계 연결(미연결) |
 | **RealClass** | _(폴더 예정)_ | 작업 기록 시 생성 | — |
 
 ---
