@@ -142,7 +142,8 @@ function buildConnectors(sec, specs) {
     g.forEach((sp, i) => { sp.lane = g.length > 1 ? Math.round(lo + (hi - lo) * (i + 0.5) / g.length) : Math.round((lo + hi) / 2); });
     // 이탈 코리도: 트리거 x순 정렬, 오른쪽에 같은-y(±80) 형제 트리거가 있으면(가로지름) 화면 위/아래로 우회
     const byTx = [...g].sort((a, b) => a._trig.x2 - b._trig.x2);
-    byTx.forEach((sp, i) => { const crossesRight = byTx.slice(i + 1).some(o => Math.abs(o._trig.cy - sp._trig.cy) < 80);
+    byTx.forEach((sp, i) => { // ⚠️ 같은 트리거의 조건 분기(x2·cy 동일)는 형제 버튼이 아니다 → 코리도 ❌, 레인 분리로 충분
+      const crossesRight = byTx.slice(i + 1).some(o => o._trig.x2 > sp._trig.x2 && Math.abs(o._trig.cy - sp._trig.cy) < 80);
       sp.corridorY = crossesRight ? (sp._to.cy < sp._trig.cy ? from.y1 - 44 : from.y2 + 44) : null; }); }
 
   // 빌드 + 검증
